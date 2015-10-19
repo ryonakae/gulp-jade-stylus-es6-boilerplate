@@ -6,11 +6,11 @@ babelify = require 'babelify'
 watchify = require 'watchify'
 source = require 'vinyl-source-stream'
 buffer = require 'vinyl-buffer'
-merge = require 'utils-merge'
 uglify = require 'gulp-uglify'
 sourcemaps = require 'gulp-sourcemaps'
 gutil = require 'gulp-util'
 gulpif = require 'gulp-if'
+prettyHrtime = require 'pretty-hrtime'
 
 
 # path
@@ -19,44 +19,67 @@ srcPath = './' + path.source.javascripts + 'main.js'
 destPath = './' + path.build.javascripts
 
 
-# browserify
-# gulp.task 'browserify', ['bower'], ->
+# browserify task
 gulp.task 'browserify', ->
   compile env.isProduction
 
 
-# compile task
-compile = ->
+# compile function
+compile = (isProduction) ->
   option =
     transform: [babelify]
     debug: true
     extensions: ['.js']
   bundler = null
+  bundleJs = 'bundle.js'
+  bundleLogger = new BundleLogger srcPath, bundleJs
 
-  # production
-  if(env.isProduction == true)
-    bundler = browserify(srcPath, option)
-  # development
+  # production(browserify)
+  if(isProduction == true)
+    bundler = browserify srcPath, option
+
+  # development(watchify)
   else
-    bundler = watchify browserify(srcPath, option)
+    option.cache = {}
+    option.packageCache = {}
+    option.fullPaths = true
+    bundler = watchify browserify srcPath, option
+    bundleLogger.watch()
 
   bundle = ->
+    bundleLogger.begin()
     bundler
       .bundle()
       .on 'error', (err)->
-        console.log gutil.log 'Browserify Error: \n' + err.message
-      .pipe source 'bundle.js'
+        gutil.log 'Browserify Error: \n' + err.message
+      .pipe source bundleJs
       .pipe buffer()
-      .pipe gulpif env.isProduction == false, sourcemaps.init
+      .pipe gulpif isProduction == false, sourcemaps.init
         loadMaps: true
-      .pipe gulpif env.isProduction == false, sourcemaps.write './'
-      .pipe gulpif env.isProduction == true, uglify
+      .pipe gulpif isProduction == false, sourcemaps.write './'
+      .pipe gulpif isProduction == true, uglify
         preserveComments: 'some'
+      .on 'end', bundleLogger.end
       .pipe gulp.dest destPath
 
-  bundler.on 'update', ->
-    bundle()
-  bundler.on 'log', (msg)->
-    gutil.log 'Finished', '\'' + gutil.colors.cyan('watchify') + '\'', msg
+  bundler.on 'update', bundle
 
   bundle()
+
+
+# logger function
+class BundleLogger
+  constructor: (src, bundle) ->
+    @beginTime = null
+
+    @begin = =>
+      @beginTime = process.hrtime()
+      gutil.log 'Bundling', gutil.colors.green(src) + '...'
+
+    @watch = ->
+      gutil.log 'Watching files required by', gutil.colors.yellow(src)
+
+    @end = =>
+      taskTime = process.hrtime @beginTime
+      prettyTime = prettyHrtime taskTime
+      gutil.log 'Bundled', gutil.colors.green(bundle), 'in', gutil.colors.magenta(prettyTime)

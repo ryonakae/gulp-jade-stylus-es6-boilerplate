@@ -9,6 +9,7 @@
     "bower": "^1.6.3",
     "browser-sync": "^2.9.11",
     "browserify": "^11.2.0",
+    "browserify-shim": "^3.8.10",
     "coffee-script": "^1.10.0",
     "gulp": "^3.9.0",
     "gulp-cache": "^0.3.0",
@@ -27,11 +28,11 @@
     "imagemin-pngcrush": "^4.1.0",
     "kouto-swiss": "^0.11.13",
     "minimist": "^1.2.0",
+    "pretty-hrtime": "^1.0.1",
     "require-dir": "^0.3.0",
     "rimraf": "^2.4.3",
     "run-sequence": "^1.1.4",
     "stylus": "^0.52.4",
-    "utils-merge": "^1.0.0",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.4.0"
@@ -48,5 +49,17 @@
   "bugs": {
     "url": "https://github.com/ryonakae/jade-stylus-es6-boilerplate/issues"
   },
-  "homepage": "https://github.com/ryonakae/jade-stylus-es6-boilerplate#readme"
+  "homepage": "https://github.com/ryonakae/jade-stylus-es6-boilerplate#readme",
+  "browserify": {
+    "transform": [
+      "browserify-shim"
+    ]
+  },
+  "browser": {
+    "jquery": "./bower_components/jquery/dist/jquery.min.js",
+    "velocity": "./bower_components/velocity/velocity.min.js"
+  },
+  "browserify-shim": {
+    "jquery": "$"
+  }
 }

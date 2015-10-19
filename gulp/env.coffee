@@ -1,4 +1,5 @@
 minimist = require 'minimist'
+gutil = require 'gulp-util'
 
 
 minimistOption =
@@ -12,7 +13,7 @@ isProduction = false
 if(options.env == 'production')
   isProduction = true
 
-console.log('[build env]', options.env, '[is production]', isProduction)
+gutil.log '[env]', gutil.colors.yellow(options.env), '[isProduction]', gutil.colors.yellow(isProduction)
 
 
 module.exports =
