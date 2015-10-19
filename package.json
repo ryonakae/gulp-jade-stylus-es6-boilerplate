@@ -5,8 +5,10 @@
   "main": "gulpfile.js",
   "devDependencies": {
     "autoprefixer-stylus": "^0.8.0",
+    "babelify": "^6.3.0",
     "bower": "^1.6.3",
     "browser-sync": "^2.9.11",
+    "browserify": "^11.2.0",
     "coffee-script": "^1.10.0",
     "gulp": "^3.9.0",
     "gulp-cache": "^0.3.0",
@@ -19,6 +21,8 @@
     "gulp-plumber": "^1.0.1",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-stylus": "^2.1.0",
+    "gulp-uglify": "^1.4.2",
+    "gulp-util": "^3.0.6",
     "gulp.spritesmith": "^4.1.1",
     "imagemin-pngcrush": "^4.1.0",
     "kouto-swiss": "^0.11.13",
@@ -26,7 +30,11 @@
     "require-dir": "^0.3.0",
     "rimraf": "^2.4.3",
     "run-sequence": "^1.1.4",
-    "stylus": "^0.52.4"
+    "stylus": "^0.52.4",
+    "utils-merge": "^1.0.0",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0",
+    "watchify": "^3.4.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

@@ -19,7 +19,7 @@ gulp.task 'stylus', ->
       '!' + path.source.stylesheets + '**/_*.styl'
     ]
     .pipe plumber()
-    .pipe gulpif(env.isProduction == false, sourcemaps.init())
+    .pipe gulpif env.isProduction == false, sourcemaps.init()
     .pipe stylus
       use: [
         koutoSwiss()
@@ -28,8 +28,8 @@ gulp.task 'stylus', ->
       ]
       set:
         "include css": true
-    .pipe gulpif(env.isProduction == false, sourcemaps.write './')
-    .pipe gulpif(env.isProduction == true, combineMediaQueries())
-    .pipe gulpif(env.isProduction == true, csscomb())
-    .pipe gulpif(env.isProduction == true, minifyCss())
+    .pipe gulpif env.isProduction == false, sourcemaps.write './'
+    .pipe gulpif env.isProduction == true, combineMediaQueries()
+    .pipe gulpif env.isProduction == true, csscomb()
+    .pipe gulpif env.isProduction == true, minifyCss()
     .pipe gulp.dest path.build.stylesheets
