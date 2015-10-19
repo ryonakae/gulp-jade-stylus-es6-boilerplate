@@ -1,9 +1,11 @@
 gulp = require 'gulp'
 path = require '../path'
+env = require '../env'
 imagemin = require 'gulp-imagemin'
 pngcrush = require 'imagemin-pngcrush'
 cache = require 'gulp-cache'
 spritesmith = require 'gulp.spritesmith'
+gulpif = require 'gulp-if'
 
 
 imageminOption =
@@ -38,7 +40,7 @@ gulp.task 'imageSprite', ->
     retinaImgPath: '../images/sprite-2x.png'
 
   spriteData.img
-    .pipe cache imagemin imageminOption
+    .pipe gulpif env.isProduction == true, cache imagemin imageminOption
     .pipe gulp.dest path.source.images
 
   spriteData.css

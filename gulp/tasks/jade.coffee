@@ -1,7 +1,9 @@
 gulp = require 'gulp'
 path = require '../path'
+env = require '../env'
 jade = require 'gulp-jade'
 plumber = require 'gulp-plumber'
+gulpif = require 'gulp-if'
 
 
 gulp.task 'jade', ->
