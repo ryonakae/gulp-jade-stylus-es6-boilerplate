@@ -13,12 +13,3 @@ gulp.task 'browserSync', ->
       baseDir: path.build.root
     # logLevel: 'debug'
     # logConnections: true
-
-
-gulp.task 'bsReload', ->
-  browserSync.reload()
-
-
-gulp.task 'bsStream', ->
-  browserSync.reload
-    stream: true

@@ -15,11 +15,8 @@ gulp.task 'default', ->
     runSequence 'cleanBuild', ['copyFile', 'imageSprite'], ['jade', 'stylus', 'browserify'], 'browserSync'
 
     # watch file
-    gulp.watch path.source.root + '**/*.jade', ->
-      runSequence 'jade', 'bsReload'
-    gulp.watch path.source.stylesheets + '**/*.styl', ->
-      runSequence 'stylus', 'bsReload'
-    gulp.watch path.source.fonts + '*', ->
-      runSequence 'copyFile', 'bsReload'
+    gulp.watch path.source.root + '**/*.jade', ['jade']
+    gulp.watch path.source.stylesheets + '**/*.styl', ['stylus']
+    gulp.watch path.source.fonts + '*', ['copyFile']
     gulp.watch path.source.sprite + '*', ->
-      runSequence 'imageSprite', 'stylus', 'bsReload'
+      runSequence 'imageSprite', 'stylus'

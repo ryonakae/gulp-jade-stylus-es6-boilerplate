@@ -10,6 +10,7 @@ combineMediaQueries = require 'gulp-combine-media-queries'
 csscomb = require 'gulp-csscomb'
 minifyCss = require 'gulp-minify-css'
 gulpif = require 'gulp-if'
+browserSync = require 'browser-sync'
 
 
 gulp.task 'stylus', ->
@@ -33,3 +34,5 @@ gulp.task 'stylus', ->
     .pipe gulpif env.isProduction == true, csscomb()
     .pipe gulpif env.isProduction == true, minifyCss()
     .pipe gulp.dest path.build.stylesheets
+    .pipe browserSync.stream
+      once: true

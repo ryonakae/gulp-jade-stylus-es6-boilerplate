@@ -11,6 +11,7 @@ sourcemaps = require 'gulp-sourcemaps'
 gutil = require 'gulp-util'
 gulpif = require 'gulp-if'
 prettyHrtime = require 'pretty-hrtime'
+browserSync = require 'browser-sync'
 
 
 # path
@@ -51,7 +52,7 @@ compile = (isProduction) ->
     bundler
       .bundle()
       .on 'error', (err)->
-        gutil.log 'Browserify Error: \n' + err.message
+        gutil.log 'Browserify Error: \n' + gutil.colors.red(err.message)
       .pipe source bundleJs
       .pipe buffer()
       .pipe gulpif isProduction == false, sourcemaps.init
@@ -61,6 +62,8 @@ compile = (isProduction) ->
         preserveComments: 'some'
       .on 'end', bundleLogger.end
       .pipe gulp.dest destPath
+      .pipe browserSync.stream
+        once: true
 
   bundler.on 'update', bundle
 
