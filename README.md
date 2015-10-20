@@ -32,10 +32,10 @@ Boilerplate of jade, stylus and es6 by gulp.
 
 
 ## Commands
-### Clone this repository
+### Download
 
-    $ git clone https://github.com/ryonakae/jade-stylus-es6-boilerplate.git
-    $ cd jade-stylus-es6-boilerplate
+* From master: [Download](https://github.com/ryonakae/jade-stylus-es6-boilerplate/archive/master.zip)
+* From release: [Releases](https://github.com/ryonakae/jade-stylus-es6-boilerplate/releases)
 
 ### Install npm packages
 
