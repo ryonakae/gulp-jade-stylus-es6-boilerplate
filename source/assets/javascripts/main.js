@@ -1,7 +1,7 @@
 'use strict';
 
-require('jquery');
-require('velocity');
+const $ = require('jquery');
+const velocity = require('velocity');
 
 class Greet {
   constructor(msg) {
@@ -13,5 +13,5 @@ class Greet {
   }
 }
 
-var greet = new Greet('Hello World!');
+const greet = new Greet('Hello World!');
 console.log(greet.say());
