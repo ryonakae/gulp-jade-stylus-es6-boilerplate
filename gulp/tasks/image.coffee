@@ -23,7 +23,7 @@ gulp.task 'imageMin', ->
       path.source.images + '**/*'
       '!' + path.source.sprite + '*'
     ]
-    .pipe cache imagemin imageminOption
+    .pipe gulpif env.isProduction == true, cache imagemin imageminOption
     .pipe gulp.dest path.build.images
 
 
