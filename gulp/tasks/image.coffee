@@ -23,7 +23,7 @@ gulp.task 'imageMin', ->
       path.source.images + '**/*'
       '!' + path.source.sprite + '*'
     ]
-    .pipe gulpif env.isProduction == true, cache imagemin imageminOption
+    .pipe gulpif env.isProduction == true, imagemin imageminOption
     .pipe gulp.dest path.build.images
 
 
@@ -40,8 +40,8 @@ gulp.task 'imageSprite', ->
     retinaImgPath: '../images/sprite-2x.png'
 
   spriteData.img
-    .pipe gulpif env.isProduction == true, cache imagemin imageminOption
-    .pipe gulp.dest path.source.images
+    .pipe gulpif env.isProduction == true, imagemin imageminOption
+    .pipe gulp.dest path.build.images
 
   spriteData.css
     .pipe gulp.dest path.source.stylesheets

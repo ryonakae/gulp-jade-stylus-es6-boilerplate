@@ -11,7 +11,6 @@ sourcemaps = require 'gulp-sourcemaps'
 gutil = require 'gulp-util'
 gulpif = require 'gulp-if'
 prettyHrtime = require 'pretty-hrtime'
-browserSync = require 'browser-sync'
 
 
 # path
@@ -62,8 +61,6 @@ compile = (isProduction) ->
         preserveComments: 'some'
       .on 'end', bundleLogger.end
       .pipe gulp.dest destPath
-      .pipe browserSync.stream
-        once: true
 
   bundler.on 'update', bundle
 

@@ -4,7 +4,6 @@ env = require '../env'
 jade = require 'gulp-jade'
 plumber = require 'gulp-plumber'
 gulpif = require 'gulp-if'
-browserSync = require 'browser-sync'
 
 
 gulp.task 'jade', ->
@@ -17,5 +16,3 @@ gulp.task 'jade', ->
     .pipe jade
       pretty: true
     .pipe gulp.dest path.build.root
-    .pipe browserSync.stream
-      once: true
