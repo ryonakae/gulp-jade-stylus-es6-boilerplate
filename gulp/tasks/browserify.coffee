@@ -11,10 +11,12 @@ sourcemaps = require 'gulp-sourcemaps'
 gutil = require 'gulp-util'
 gulpif = require 'gulp-if'
 prettyHrtime = require 'pretty-hrtime'
+eslint = require 'gulp-eslint'
+plumber = require 'gulp-plumber'
 
 
 # path
-# パスの先頭に ./ をつけないと何故かエラー出る
+# パスの先頭に ./ をつけないとエラー出る
 srcPath = './' + path.source.javascripts + 'main.js'
 destPath = './' + path.build.javascripts
 
@@ -27,7 +29,7 @@ gulp.task 'browserify', ->
 # compile function
 compile = (isProduction) ->
   option =
-    transform: [babelify]
+    transform: [[babelify, { 'presets': ['es2015'] }]]
     debug: true
     extensions: ['.js']
   bundler = null
@@ -47,6 +49,19 @@ compile = (isProduction) ->
     bundleLogger.watch()
 
   bundle = ->
+    # ESLint
+    bundleLogger.beginLint()
+    gulp
+      .src './' + path.source.javascripts + '**/*.js'
+      .pipe plumber()
+      .pipe eslint
+        useEslintrc: true
+      .pipe eslint.format()
+      .pipe eslint.failOnError()
+      .pipe eslint.result (result) ->
+        bundleLogger.endLint()
+
+    # Browserify
     bundleLogger.begin()
     bundler
       .bundle()
@@ -72,6 +87,10 @@ class BundleLogger
   constructor: (src, bundle) ->
     @beginTime = null
 
+    @beginLint = =>
+      @beginTime = process.hrtime()
+      gutil.log 'Starting', gutil.colors.magenta('ESLint')
+
     @begin = =>
       @beginTime = process.hrtime()
       gutil.log 'Bundling', gutil.colors.green(src) + '...'
@@ -83,3 +102,8 @@ class BundleLogger
       taskTime = process.hrtime @beginTime
       prettyTime = prettyHrtime taskTime
       gutil.log 'Bundled', gutil.colors.green(bundle), 'in', gutil.colors.magenta(prettyTime)
+
+    @endLint = =>
+      taskTime = process.hrtime @beginTime
+      prettyTime = prettyHrtime taskTime
+      gutil.log 'Finished', gutil.colors.magenta('ESLint'), 'in', gutil.colors.magenta(prettyTime)

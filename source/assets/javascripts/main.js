@@ -1,9 +1,11 @@
 'use strict';
 
+import JQuery from 'jquery';
+window.jQuery = window.$ = JQuery;
+import UAParser from 'ua-parser-js';
+
 (() => {
 
-  window.jQuery = window.$ = require('jquery');
-  const UAParser = require('ua-parser-js');
   const parser = new UAParser();
   const ua = parser.getResult();
 
