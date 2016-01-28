@@ -13,10 +13,3 @@ gulp.task 'default', ->
   # development
   else
     runSequence 'cleanBuild', ['copyFile', 'imageSprite'], ['jade', 'stylus', 'browserify', 'imageMin'], 'browserSync', 'watch'
-
-    # watch file
-    gulp.watch path.source.root + '**/*.jade', ['jade']
-    gulp.watch path.source.stylesheets + '**/*.styl', ['stylus']
-    gulp.watch path.source.fonts + '*', ['copyFile']
-    gulp.watch path.source.sprite + '*', ->
-      runSequence 'imageSprite', 'stylus'
