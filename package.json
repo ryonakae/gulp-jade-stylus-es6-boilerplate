@@ -1,7 +1,8 @@
 {
   "main": "gulpfile.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "gulp",
+    "build": "gulp --env=production"
   },
   "devDependencies": {
     "autoprefixer-stylus": "^0.8.0",
