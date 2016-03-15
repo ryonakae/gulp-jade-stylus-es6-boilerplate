@@ -1,19 +1,23 @@
 @import 'kouto-swiss'
-
 @import '_config'
+// @import '_sprite'
+
 
 normalize()
 box-sizing-reset()
 
 
 body
-  font-family 'Avenir Next', Avenir, 'Helvetica Neue', Helvetica, Arial, 'ヒラギノ角ゴ ProN W3', 'Hiragino Kaku Gothic ProN', 'メイリオ', Meiryo, sans-serif
+  font-family $fontFamily_default
   font-size $fontSize_default
   line-height $lineHeight_default
   letter-spacing $letterSpacing_default
   background-color $bgColor_default
   font-kerning normal
   color $textColor_default
+  // text-align justify
+  // word-wrap break-word
+  // overflow-wrap break-word
 
   +retina-query(only screen, 2)
     -webkit-font-smoothing antialiased
@@ -30,3 +34,10 @@ a
   &:hover
     opacity 0.7
     text-decoration none
+
+
+h1, h2, h3, h4, h5, h6
+  line-height $lineHeight_title
+
+  a
+    color inherit

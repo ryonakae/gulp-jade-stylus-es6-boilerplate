@@ -6,6 +6,7 @@ pngcrush = require 'imagemin-pngcrush'
 cache = require 'gulp-cache'
 spritesmith = require 'gulp.spritesmith'
 gulpif = require 'gulp-if'
+plumber = require 'gulp-plumber'
 
 
 imageminOption =
@@ -30,6 +31,7 @@ gulp.task 'imageMin', ->
 # image sprite
 gulp.task 'imageSprite', ->
   spriteData = gulp.src path.source.sprite + '*.png'
+  .pipe plumber()
   .pipe spritesmith
     imgName: 'sprite.png'
     imgPath: '../images/sprite.png'

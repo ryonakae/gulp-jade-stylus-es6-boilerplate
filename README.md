@@ -5,30 +5,6 @@ Boilerplate of jade, stylus and es6 by gulp.
 ## Require
 * Node.js
 * Gulp
-* Bower
-
-
-## Development Environment
-### Task Runner
-* Gulp
-
-### HTML
-* Jade
-
-### CSS
-* Stylus
-  - kouto swiss
-
-### JavaScript
-* ES6
-  - Browserify(Watchify)
-  - Babelify
-* Bower
-  - jQuery
-  - Velocity.js
-
-### Local server
-* BrowserSync
 
 
 ## Commands
@@ -39,15 +15,11 @@ Boilerplate of jade, stylus and es6 by gulp.
 ### Install npm packages
 
     $ npm i
-    
-### Install bower
-
-    $ bower i
 
 ### Development build
 
-    $ gulp
-    
+    $ npm start
+
 ### Production build
 
-    $ gulp --env production
+    $ npm run-script build
