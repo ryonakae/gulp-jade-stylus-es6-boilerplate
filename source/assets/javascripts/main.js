@@ -1,26 +1,30 @@
 'use strict';
 
-import JQuery from 'jquery';
-window.jQuery = window.$ = JQuery;
-import UAParser from 'ua-parser-js';
-const parser = new UAParser();
-const ua = parser.getResult();
+window.jQuery = window.$ = require('jquery');
+const imagesLoaded = require('imagesloaded');
+imagesLoaded.makeJQueryPlugin($);
+const velocity = require('velocity-animate');
+
+import ResizeManager from './modules/resizeManager';
+import GetUa from './modules/getUa';
+const resizeManager = new ResizeManager();
+const getUa = new GetUa();
 
 (() => {
-  class Greet {
-    constructor(msg) {
-      this.message = msg;
-    }
-
-    say() {
-      return this.message;
-    }
-  }
-
-  const greet = new Greet('Hello World!');
-  console.log(greet.say());
-
   $(() => {
     console.log('page loaded');
+
+    resizeManager.add(resized01);
+    resizeManager.add(resized02);
+    resizeManager.init();
+
+    getUa.init();
   });
+
+  const resized01 = () => {
+    console.log('is resized! 01');
+  };
+  const resized02 = () => {
+    console.log('is resized! 02');
+  };
 })();
