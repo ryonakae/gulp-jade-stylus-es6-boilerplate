@@ -5,20 +5,25 @@ const imagesLoaded = require('imagesloaded');
 imagesLoaded.makeJQueryPlugin($);
 const velocity = require('velocity-animate');
 
-import ResizeManager from './modules/resizeManager';
-import GetUa from './modules/getUa';
+import ResizeManager from './modules/ResizeManager';
+import ScrollManager from './modules/ScrollManager';
+import GetUa from './modules/GetUa';
 const resizeManager = new ResizeManager();
+const scrollManager = new ScrollManager();
 const getUa = new GetUa();
 
 (() => {
   $(() => {
     console.log('page loaded');
 
+    getUa.init();
+
     resizeManager.add(resized01);
     resizeManager.add(resized02);
     resizeManager.init();
 
-    getUa.init();
+    scrollManager.add(scroll01);
+    scrollManager.init();
   });
 
   const resized01 = () => {
@@ -26,5 +31,8 @@ const getUa = new GetUa();
   };
   const resized02 = () => {
     console.log('is resized! 02');
+  };
+  const scroll01 = () => {
+    console.log('is scrolled! 01');
   };
 })();

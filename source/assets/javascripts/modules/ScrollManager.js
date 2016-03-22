@@ -2,10 +2,11 @@
 
 window.jQuery = window.$ = require('jquery');
 
-export default class ResizeManager {
+export default class ScrollManager {
   constructor() {
     this.$window = null;
-    this.windowWidth = 0;
+    this.scrollTop = 0;
+    this.scrollBottom = 0;
     this.windowHeight = 0;
     this.functions = [];
     this.length = 0;
@@ -17,7 +18,7 @@ export default class ResizeManager {
     this.$window = $(window);
     this.update();
 
-    this.$window.on('resize orientationchange', () => {
+    this.$window.on('scroll', () => {
       if (window.requestAnimationFrame) {
         window.requestAnimationFrame(() => {
           this.update();
@@ -43,8 +44,9 @@ export default class ResizeManager {
   }
 
   update() {
-    this.windowWidth = this.$window.width();
     this.windowHeight = this.$window.height();
+    this.scrollTop = this.$window.scrollTop();
+    this.scrollBottom = this.scrollTop + this.windowHeight;
 
     for (let i = 0; i < this.length; i++) {
       let func = this.functions[i];
