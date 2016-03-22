@@ -12,6 +12,8 @@ const resizeManager = new ResizeManager();
 const scrollManager = new ScrollManager();
 const getUa = new GetUa();
 
+export const mainResizeManager = resizeManager;
+
 (() => {
   $(() => {
     console.log('page loaded');

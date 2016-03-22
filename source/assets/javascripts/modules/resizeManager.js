@@ -9,8 +9,8 @@ export default class ResizeManager {
     this.windowHeight = 0;
     this.functions = [];
     this.length = 0;
-    this.timer = null;
     this.fps = 60;
+    this.isRunning = false;
   }
 
   init() {
@@ -18,16 +18,18 @@ export default class ResizeManager {
     this.update();
 
     this.$window.on('resize orientationchange', () => {
-      if (window.requestAnimationFrame) {
-        window.requestAnimationFrame(() => {
-          this.update();
-        });
-      } else {
-        clearTimeout(this.timer);
+      if (!this.isRunning) {
+        this.isRunning = true;
 
-        this.timer = setTimeout(() => {
-          this.update();
-        }, 1000/this.fps);
+        if (window.requestAnimationFrame) {
+          window.requestAnimationFrame(() => {
+            this.update();
+          });
+        } else {
+          setTimeout(() => {
+            this.update();
+          }, 1000/this.fps);
+        }
       }
     });
   }
@@ -50,5 +52,7 @@ export default class ResizeManager {
       let func = this.functions[i];
       func();
     }
+
+    this.isRunning = false;
   }
 };
