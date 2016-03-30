@@ -11,15 +11,16 @@ sourcemaps = require 'gulp-sourcemaps'
 gutil = require 'gulp-util'
 gulpif = require 'gulp-if'
 glob = require 'glob'
-
-
-srcFiles = glob.sync './' + path.source.javascripts + '*.{js,coffee,jsx,vue}'
-destPath = './' + path.build.javascripts
+plumber = require 'gulp-plumber'
 
 
 # bundle function
 bundleScript = (isProduction) ->
-  for file in srcFiles
+  srcFiles = glob.sync './' + path.source.javascripts + '*.js'
+  srcPath = './' + path.source.javascripts
+  destPath = './' + path.build.javascripts
+
+  srcFiles.forEach (file) ->
     options =
       entries: file
       transform: [[babelify, { 'presets': ['es2015'] }]]
@@ -27,15 +28,19 @@ bundleScript = (isProduction) ->
     if(isProduction == true)
       bundler = browserify options
     else
+      options.cache = {}
+      options.packageCache = {}
+      options.fullPaths = true
       bundler = watchify browserify options
 
     bundle = ->
-      bundleFile = file.replace(/.+\/(.+)\.(js|coffee|jsx|vue)/g, '$1') + '.js'
+      bundleFile = file.replace(/.+\/(.+)\.js/g, '$1') + '.js'
 
       bundler
         .bundle()
         .on 'error', (err)->
           gutil.log 'Browserify Error: \n' + gutil.colors.red(err.message)
+        .pipe plumber()
         .pipe source bundleFile
         .pipe buffer()
         .pipe gulpif isProduction == false, sourcemaps.init loadMaps: true
