@@ -10,9 +10,6 @@ uglify = require 'gulp-uglify'
 sourcemaps = require 'gulp-sourcemaps'
 gutil = require 'gulp-util'
 gulpif = require 'gulp-if'
-prettyHrtime = require 'pretty-hrtime'
-eslint = require 'gulp-eslint'
-plumber = require 'gulp-plumber'
 glob = require 'glob'
 
 
